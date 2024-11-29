@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.demoprojetjava.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.demoprojetjava.HelloController">
    <children>
-      <WebView fx:id="wvCarte" layoutX="87.0" layoutY="71.0" prefHeight="311.0" prefWidth="495.0" />
+      <WebView fx:id="wvCarte" layoutX="11.0" layoutY="81.0" prefHeight="303.0" prefWidth="582.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="76.0" />
+      <Text layoutX="222.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VELIKO" textAlignment="CENTER" underline="true" wrappingWidth="155.43408203125">
+         <font>
+            <Font name=".PingFang UI Text SC" size="41.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

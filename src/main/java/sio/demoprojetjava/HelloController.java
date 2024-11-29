@@ -1,17 +1,14 @@
 package sio.demoprojetjava;
 
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import sio.demoprojetjava.model.Station;
+import sio.demoprojetjava.tools.DataSourceProvider;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.List;
 
 public class HelloController {
     @FXML

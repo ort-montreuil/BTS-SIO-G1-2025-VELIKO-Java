@@ -5,4 +5,6 @@ module sio.demoprojetjava {
     requires java.sql;
     opens sio.demoprojetjava to javafx.fxml;
     exports sio.demoprojetjava;
+    exports sio.demoprojetjava.tools;
+    opens sio.demoprojetjava.tools to javafx.fxml;
 }

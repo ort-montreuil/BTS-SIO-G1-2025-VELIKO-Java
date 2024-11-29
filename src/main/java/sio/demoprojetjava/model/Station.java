@@ -1,11 +1,5 @@
 package sio.demoprojetjava.model;
 
-import sio.demoprojetjava.DataSourceProvider;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Station  {
     private double latitude;
     private double longitude;
