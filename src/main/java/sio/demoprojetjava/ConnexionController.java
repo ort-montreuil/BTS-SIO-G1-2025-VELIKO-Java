@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sio.demoprojetjava.controller.UserController;
+import sio.demoprojetjava.model.User;
 import sio.demoprojetjava.tools.DataSourceProvider;
 
 import java.io.IOException;
@@ -26,47 +28,47 @@ public class ConnexionController {
     private TextField txtIdConnexion;
     @FXML
     private PasswordField txtMdpConnexion;
+    private User user;
+    UserController userController;
+
+    DataSourceProvider dataSourceProvider;
+
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException, ClassNotFoundException {
         System.out.println("Initialisation des composants...");
+        userController = new UserController();
+        dataSourceProvider = new DataSourceProvider();
     }
 
-    private boolean authenticate(String username, String password) {
-        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
 
-        try (Connection connection = DataSourceProvider.getCnx();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            return resultSet.next();
-        } catch (SQLException e) {
-            showAlert("Erreur", "Une erreur est survenue lors de la connexion à la base de données.", Alert.AlertType.ERROR);
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     @FXML
-    public void btnCLickedValiderConnexion(Event event) {
-        String username = txtIdConnexion.getText().trim();
-        String password = txtMdpConnexion.getText().trim();
-
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert("Erreur", "Veuillez remplir tous les champs.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        if (authenticate(username, password)) {
-            showAlert("Succès", "Connexion réussie !", Alert.AlertType.INFORMATION);
-            loadNewScene("/sio/demoprojetjava/another-view.fxml");
-        } else {
-            showAlert("Erreur", "Identifiant ou mot de passe incorrect.", Alert.AlertType.ERROR);
+    public void btnCLickedValiderConnexion(Event event) throws SQLException, IOException {
+        try {
+            if (userController.checkCredentials(txtIdConnexion.getText(), txtMdpConnexion.getText())) {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = new Stage();
+                stage.setTitle("Hello");
+                stage.setScene(scene);
+                stage.show();
+                ((Stage) btnValiderConnexion.getScene().getWindow()).close();
+                System.out.println("c'est bon");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de connexion");
+                alert.setContentText("Pseudo ou mot de passe incorrect");
+                alert.showAndWait();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
-
     private void loadNewScene(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));

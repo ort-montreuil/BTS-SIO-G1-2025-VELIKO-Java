@@ -3,14 +3,19 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import sio.demoprojetjava.model.User;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -27,6 +32,8 @@ public class HelloController implements Initializable {
     private Pane mapContainer;
     @FXML
     private Label welcomeText;
+    private ConnexionController connexionController;
+    private User user;
 
 
     @FXML
@@ -37,6 +44,7 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Create a WebView instance
+        connexionController = new ConnexionController();
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
 
@@ -64,6 +72,9 @@ public class HelloController implements Initializable {
                 webEngine.executeScript("updateMap(" + new Gson().toJson(stations) + ")");
             }
         });
+
+
+
     }
 
     private List<JsonObject> fetchStationData() {

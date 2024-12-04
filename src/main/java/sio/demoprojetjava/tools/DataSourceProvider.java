@@ -11,7 +11,7 @@ public class DataSourceProvider {
     public DataSourceProvider() throws ClassNotFoundException, SQLException {
         String pilote = "com.mysql.cj.jdbc.Driver";
         Class.forName(pilote);
-        cnx = DriverManager.getConnection("jdbc:mysql://localhost:3306/app_db?serverTimezone="
+        cnx = DriverManager.getConnection("jdbc:mysql://localhost/app_db?serverTimezone="
                 + TimeZone.getDefault().getID(), "root", "root");
     }
 
