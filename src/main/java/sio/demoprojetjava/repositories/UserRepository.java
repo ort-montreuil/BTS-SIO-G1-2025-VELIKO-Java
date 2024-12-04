@@ -1,7 +1,6 @@
 package sio.demoprojetjava.repositories;
 
 import javafx.scene.control.Alert;
-import sio.demoprojetjava.model.User;
 import sio.demoprojetjava.tools.DataSourceProvider;
 import sio.demoprojetjava.tools.PasswordHasher;
 
@@ -15,11 +14,9 @@ public class UserRepository {
     private PreparedStatement ps;
     private ResultSet rs;
 
-    public UserRepository()
-    {
+    public UserRepository() {
         this.cnx = DataSourceProvider.getCnx();
     }
-
 
     public Boolean checkCredentials(String email, String enteredPassword) throws SQLException {
         PreparedStatement ps = cnx.prepareStatement("SELECT email, password FROM user WHERE roles = '[\"ROLE_ADMIN\"]' AND email = ?");
@@ -35,5 +32,13 @@ public class UserRepository {
         ps.close();
         rs.close();
         return result;
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }
