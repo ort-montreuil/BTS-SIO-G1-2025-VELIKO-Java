@@ -2,6 +2,7 @@ package sio.demoprojetjava;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,6 +35,8 @@ public class HelloController implements Initializable {
     private Label welcomeText;
     private ConnexionController connexionController;
     private User user;
+    @FXML
+    private Button btnAdmin;
 
 
     @FXML
@@ -142,4 +145,18 @@ public class HelloController implements Initializable {
     }
 
 
+    @FXML
+    public void btnAdminCliked(Event event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("admin.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Admin");
+            stage.setScene(scene);
+            stage.show();
+            ((Stage) btnAdmin.getScene().getWindow()).close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
