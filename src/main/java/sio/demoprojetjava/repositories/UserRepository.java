@@ -1,6 +1,7 @@
 package sio.demoprojetjava.repositories;
 
 import javafx.scene.control.Alert;
+import sio.demoprojetjava.model.User;
 import sio.demoprojetjava.tools.DataSourceProvider;
 import sio.demoprojetjava.tools.PasswordHasher;
 
@@ -8,8 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class UserRepository {
+public class UserRepository implements RepositoryInterface<User, Integer> {
     private Connection cnx;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -34,6 +36,7 @@ public class UserRepository {
         return result;
     }
 
+
     private void showAlert(String title, String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -41,4 +44,55 @@ public class UserRepository {
         alert.setHeaderText(null);
         alert.showAndWait();
     }
+
+
+    @Override
+    public void create(User obj) throws SQLException {
+    }
+
+    @Override
+    public void update(User obj) throws SQLException {
+
+        }
+
+
+    @Override
+    public void delete(User obj) throws SQLException {
+    }
+
+    @Override
+    public User getById(int id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<User> getAll() throws SQLException {
+        PreparedStatement ps = cnx.prepareStatement("SELECT id,nom,prenom,email,is_verified,is_bloqued,is_forced_mdp FROM user WHERE roles = '[]'");
+        ResultSet rs = ps.executeQuery();
+        ArrayList<User> users = new ArrayList<>();
+        while (rs.next()) {
+            users.add(new User(
+                    rs.getInt("id"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getString("email"),
+                    //rs.getString("password"),
+                    rs.getInt("is_verified"),
+                    rs.getBoolean("is_bloqued"),
+                    rs.getBoolean("is_forced_mdp")
+            ));
+        }
+        ps.close();
+        rs.close();
+        return users;
+    }
+    public void deleteUser(int idUser) throws SQLException {
+        String query = "UPDATE user SET nom='anonyme@Veliko', prenom='anonyme', email='anonyme', adresse='anonyme' WHERE id = ?";
+
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setInt(1, idUser);  // Assurez-vous que obj.getIdUser() donne l'ID de l'utilisateur
+            ps.executeUpdate();
+        }
+    }
+
 }

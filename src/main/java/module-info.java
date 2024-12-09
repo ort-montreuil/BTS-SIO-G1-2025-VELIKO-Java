@@ -9,4 +9,5 @@ module sio.demoprojetjava {
     exports sio.demoprojetjava;
     exports sio.demoprojetjava.tools;
     opens sio.demoprojetjava.tools to javafx.fxml;
+    opens sio.demoprojetjava.model to javafx.fxml, javafx.base;
 }

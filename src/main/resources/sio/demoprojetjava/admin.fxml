@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sio.demoprojetjava.Admin"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.demoprojetjava.AdminController">
+   <children>
+      <Text layoutX="134.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerer les Users" textAlignment="CENTER" underline="true" wrappingWidth="331.43408203125">
+         <font>
+            <Font name=".PingFang UI Text SC" size="41.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tvGestionUsers" layoutX="29.0" layoutY="100.0" prefHeight="225.0" prefWidth="554.0">
+         <columns>
+            <TableColumn fx:id="tcId" prefWidth="51.0" text="id" />
+            <TableColumn fx:id="tcNom" prefWidth="91.0" text="Nom" />
+            <TableColumn fx:id="tcPrenom" prefWidth="83.0" text="Prenom" />
+            <TableColumn fx:id="tcMail" prefWidth="88.0" text="Mail" />
+            <TableColumn fx:id="tcVerifier" prefWidth="62.0" text="Verifier" />
+            <TableColumn fx:id="tcBloquer" prefWidth="56.0" text="Bloquer" />
+            <TableColumn fx:id="tcForcerMdp" prefWidth="122.0" text="ForcerChangerMdp" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnChangerMdp" layoutX="405.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#btnChangerMdpClicked" prefHeight="26.0" prefWidth="151.0" text="Changer Mots de Passe" />
+      <Button fx:id="btnSupprimer" layoutX="246.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#btnSupprimerClicked" prefHeight="26.0" prefWidth="121.0" text="Supprimer" />
+      <Button fx:id="btnBloquer" layoutX="74.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#btnBloquerClicked" prefHeight="26.0" prefWidth="121.0" text="Bloquer" />
+   </children>
 </AnchorPane>
