@@ -22,4 +22,13 @@ public class UserController {
     public Boolean checkCredentials(String email, String enteredPassword) throws SQLException {
         return userService.checkCredentials(email, enteredPassword);
     }
+    public boolean isBlocker(User user) throws SQLException {
+        return userService.isBlocker(user);
+    }
+    public void blocker(Integer id) throws SQLException {
+        userService.blocker(id);
+    }
+    public void deblocker(Integer id) throws SQLException {
+        userService.deblocker(id);
+    }
 }

@@ -94,5 +94,23 @@ public class UserRepository implements RepositoryInterface<User, Integer> {
             ps.executeUpdate();
         }
     }
+    public boolean isBlocker(User user) throws SQLException {
+        PreparedStatement preparedStatement = cnx.prepareStatement("SELECT is_bloqued FROM user WHERE user.id=?");
+        preparedStatement.setInt(1, user.getIdUser());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getBoolean("is_bloqued");
+    }
 
+    public void blocker(Integer id) throws SQLException {
+        ps = cnx.prepareStatement("UPDATE user SET is_bloqued = true WHERE id = ?");
+        ps.setInt(1, id);
+        ps.executeUpdate();
+    }
+
+    public void deblocker(Integer id) throws SQLException {
+        ps = cnx.prepareStatement("UPDATE user SET is_bloqued = false WHERE id = ?");
+        ps.setInt(1, id);
+        ps.executeUpdate();
+    }
 }

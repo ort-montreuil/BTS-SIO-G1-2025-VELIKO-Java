@@ -98,8 +98,36 @@ public class AdminController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void btnBloquerClicked(MouseEvent mouseEvent) {
+    public void btnBloquerClicked(MouseEvent mouseEvent) throws SQLException {
+        User selectionnee = tvGestionUsers.getSelectionModel().getSelectedItem();
+        if (selectionnee == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Aucune sélection");
+            alert.setHeaderText("Veuillez sélectionner un utilisateur.");
+            alert.setContentText("Aucun utilisateur n'a été sélectionné pour cette action.");
+            alert.showAndWait();
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de l'action");
+        String action = userController.isBlocker(selectionnee) ? "débloquer" : "bloquer";
+        alert.setHeaderText("Êtes-vous sûr de vouloir " + action + " ce compte ?");
+        alert.setContentText("Cette action peut être modifiée ultérieurement.");
+
+        if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            int idUser = selectionnee.getIdUser();
+
+            if (userController.isBlocker(selectionnee)) {
+                userController.deblocker(idUser); // Débloque si l'utilisateur est déjà bloqué
+            } else {
+                userController.blocker(idUser); // Bloque si l'utilisateur n'est pas encore bloqué
+            }
+
+            tvGestionUsers.setItems(FXCollections.observableArrayList(userController.getAll()));
+        }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
