@@ -18,6 +18,10 @@ public class UserController {
     public void deleteUser(int idUser) throws SQLException {
         userService.deleteUser(idUser);
     }
+    public void passwordForced(int idUser) throws SQLException {
+        userService.passwordForced(idUser);
+    }
+
 
     public Boolean checkCredentials(String email, String enteredPassword) throws SQLException {
         return userService.checkCredentials(email, enteredPassword);

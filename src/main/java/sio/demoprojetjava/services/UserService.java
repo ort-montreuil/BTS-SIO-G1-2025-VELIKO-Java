@@ -21,6 +21,10 @@ public class UserService {
         userRepository.deleteUser(idUser);
     }
 
+    public void passwordForced(int idUser) throws SQLException {
+        userRepository.passwordForced(idUser);
+    }
+
     public Boolean checkCredentials(String email, String enteredPassword) throws SQLException {
         return userRepository.checkCredentials(email, enteredPassword);
     }

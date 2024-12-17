@@ -113,4 +113,15 @@ public class UserRepository implements RepositoryInterface<User, Integer> {
         ps.setInt(1, id);
         ps.executeUpdate();
     }
+
+    public void passwordForced(int idUser) throws SQLException {
+        String query = "UPDATE user SET is_forced_mdp = true WHERE id = ?";
+
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setInt(1, idUser);
+            ps.executeUpdate();
+        }
+    }
+
+
 }

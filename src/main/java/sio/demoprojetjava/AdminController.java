@@ -1,14 +1,20 @@
 package sio.demoprojetjava;
 
 import javafx.collections.FXCollections;
+import javafx.event.Event;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import sio.demoprojetjava.controller.UserController;
 import sio.demoprojetjava.model.User;
 import sio.demoprojetjava.tools.DataSourceProvider;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -41,12 +47,46 @@ public class AdminController implements Initializable {
     private TableColumn tcForcerMdp;
 
     DataSourceProvider macnx;
+    @javafx.fxml.FXML
+    private ImageView imgRevenir;
 
 
     @javafx.fxml.FXML
     public void btnChangerMdpClicked(MouseEvent mouseEvent) {
+
+        User selectedUser = tvGestionUsers.getSelectionModel().getSelectedItem();
+
+        if (selectedUser == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Aucune sélection");
+            alert.setHeaderText("Veuillez sélectionner un utilisateur.");
+            alert.setContentText("Aucun utilisateur n'a été sélectionné pour cette action.");
+            alert.showAndWait();
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de l'action");
+        alert.setHeaderText("Êtes-vous sûr de vouloir forcer le changement de mot de passe pour cet utilisateur ?");
+        alert.setContentText("Cette action peut être modifiée ultérieurement.");
+
+        if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            int idUser = selectedUser.getIdUser();
+
+            try {
+                userController.passwordForced(idUser);
+                tvGestionUsers.setItems(FXCollections.observableArrayList(userController.getAll()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText("Une erreur s'est produite lors du changement de mot de passe.");
+                errorAlert.showAndWait();
+            }
+        }
     }
 
+    @javafx.fxml.FXML
     public void btnSupprimerClicked(MouseEvent mouseEvent) {
         // Récupérer l'utilisateur sélectionné dans la TableView
         User selectedUser = tvGestionUsers.getSelectionModel().getSelectedItem();
@@ -73,7 +113,7 @@ public class AdminController implements Initializable {
                 try {
                     int idUser = selectedUser.getIdUser();
 
-                    // Appeler la méthode pour supprimer ou anonymiser l'utilisateur
+                    // Appeler la méthode pour anonymiser l'utilisateur
                     userController.deleteUser(idUser);
 
                     // Supprimer l'utilisateur de la TableView après la suppression
@@ -149,6 +189,36 @@ public class AdminController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
 
+        }
+    }
+
+    @javafx.fxml.FXML
+    public void tvClicked(Event event)throws SQLException {
+        User selectedUser = tvGestionUsers.getSelectionModel().getSelectedItem();
+        if (userController.isBlocker(selectedUser)) {
+            btnBloquer.setText("Débloquer");
+        } else {
+            btnBloquer.setText("Bloquer");
+        }
+    }
+
+    public void imgArriereClicked(Event event) {
+        try {
+            // Charger la nouvelle vue
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+            Parent root = loader.load();
+
+            // Obtenir la scène actuelle et remplacer son contenu
+            Stage stage = (Stage) imgRevenir.getScene().getWindow();
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Afficher une alerte en cas d'erreur
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de chargement");
+            alert.setHeaderText("Impossible de charger la page hello-view.fxml");
+            alert.setContentText("Vérifiez que le fichier existe et qu'il est correctement configuré.");
+            alert.showAndWait();
         }
     }
 }
