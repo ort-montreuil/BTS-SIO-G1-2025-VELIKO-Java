@@ -42,17 +42,14 @@ public class AdminController implements Initializable {
 
     DataSourceProvider macnx;
 
-
     @javafx.fxml.FXML
     public void btnChangerMdpClicked(MouseEvent mouseEvent) {
     }
 
     public void btnSupprimerClicked(MouseEvent mouseEvent) {
-        // Récupérer l'utilisateur sélectionné dans la TableView
         User selectedUser = tvGestionUsers.getSelectionModel().getSelectedItem();
 
         if (selectedUser == null) {
-            // Si aucun utilisateur n'est sélectionné, afficher un message d'erreur
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Aucune sélection");
             alert.setHeaderText("Veuillez sélectionner un utilisateur à supprimer.");
@@ -60,26 +57,18 @@ public class AdminController implements Initializable {
             return;
         }
 
-        // Créer une alerte de confirmation
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation de suppression");
         alert.setHeaderText("Êtes-vous sûr de vouloir supprimer ce compte ?");
         alert.setContentText("Cette action ne peut pas être annulée.");
 
-        // Afficher l'alerte et attendre la réponse de l'utilisateur
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                // Si l'utilisateur confirme la suppression
                 try {
                     int idUser = selectedUser.getIdUser();
-
-                    // Appeler la méthode pour supprimer ou anonymiser l'utilisateur
                     userController.deleteUser(idUser);
-
-                    // Supprimer l'utilisateur de la TableView après la suppression
                     tvGestionUsers.getItems().remove(selectedUser);
 
-                    // Afficher un message de confirmation
                     Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
                     confirmationAlert.setTitle("Suppression réussie");
                     confirmationAlert.setHeaderText("L'utilisateur a été supprimé.");
@@ -87,7 +76,6 @@ public class AdminController implements Initializable {
 
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    // Afficher une alerte d'erreur si quelque chose ne va pas
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setTitle("Erreur");
                     errorAlert.setHeaderText("Une erreur s'est produite lors de la suppression.");
@@ -111,7 +99,7 @@ public class AdminController implements Initializable {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation de l'action");
-        String action = userController.isBlocker(selectionnee) ? "débloquer" : "bloquer";
+        String action = userController.isBlocker(selectionnee) ? "bloquer" : "débloquer";
         alert.setHeaderText("Êtes-vous sûr de vouloir " + action + " ce compte ?");
         alert.setContentText("Cette action peut être modifiée ultérieurement.");
 
@@ -119,21 +107,18 @@ public class AdminController implements Initializable {
             int idUser = selectionnee.getIdUser();
 
             if (userController.isBlocker(selectionnee)) {
-                userController.deblocker(idUser); // Débloque si l'utilisateur est déjà bloqué
+                userController.deblocker(idUser);
             } else {
-                userController.blocker(idUser); // Bloque si l'utilisateur n'est pas encore bloqué
+                userController.blocker(idUser);
             }
 
             tvGestionUsers.setItems(FXCollections.observableArrayList(userController.getAll()));
         }
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-            macnx = new DataSourceProvider();
-
+        macnx = new DataSourceProvider();
         userController = new UserController();
         tcId.setCellValueFactory(new PropertyValueFactory<>("idUser"));
         tcNom.setCellValueFactory(new PropertyValueFactory<>("NomUser"));
@@ -148,7 +133,6 @@ public class AdminController implements Initializable {
             tvGestionUsers.setItems(FXCollections.observableArrayList(userController.getAll()));
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
     }
 }
