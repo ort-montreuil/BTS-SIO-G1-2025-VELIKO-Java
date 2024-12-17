@@ -14,12 +14,12 @@
    </padding>
    <children>
       <Label fx:id="welcomeText" />
-      <Button fx:id="btnAdmin" mnemonicParsing="false" onMouseClicked="#btnAdminCliked" text="admin" />
+      <Button fx:id="btnAdmin" mnemonicParsing="false" onMouseClicked="#btnAdminCliked" prefHeight="4.0" prefWidth="231.0" text="Coté Admin" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Carte Veliko" textAlignment="CENTER" underline="true" wrappingWidth="258.43408203125">
          <font>
             <Font name=".PingFang UI Text SC" size="41.0" />
          </font>
       </Text>
-      <Pane fx:id="mapContainer" prefHeight="500.0" prefWidth="980.0" />
+      <Pane fx:id="mapContainer" prefHeight="447.0" prefWidth="987.0" />
    </children>
 </VBox>
