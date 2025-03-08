@@ -1,11 +1,13 @@
 package sio.demoprojetjava.repositories;
 
+import sio.demoprojetjava.model.Reservations;
 import sio.demoprojetjava.tools.DataSourceProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StatistiquesRepository {
@@ -18,19 +20,12 @@ public class StatistiquesRepository {
         this.cnx = DataSourceProvider.getCnx();
     }
 
-    public HashMap<String,Integer> getNbReservations()
-    {
+    public HashMap<String, Integer> getNbReservations() {
         HashMap<String, Integer> datas = new HashMap<>();
         try {
-            PreparedStatement preparedStatement = cnx.prepareStatement("SELECT s.name, COUNT(r.id) AS nb_reservations\n" +
-                    "FROM station s\n" +
-                    "JOIN reservation r ON s.station_id = r.id_station_depart\n" +
-                    "GROUP BY s.station_id\n" +
-                    "ORDER BY nb_reservations DESC\n" +
-                    "LIMIT 10;\n");
+            PreparedStatement preparedStatement = cnx.prepareStatement("SELECT s.name, COUNT(r.id) AS nb_reservations FROM station s JOIN reservation r ON s.station_id = r.station_id_depart GROUP BY s.station_id ORDER BY nb_reservations DESC LIMIT 10;");
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next())
-            {
+            while (resultSet.next()) {
                 datas.put(resultSet.getString("name"), resultSet.getInt("nb_reservations"));
             }
 
@@ -38,12 +33,12 @@ public class StatistiquesRepository {
             resultSet.close();
         } catch (Exception e) {
             e.printStackTrace();
-    }
+        }
         return datas;
     }
 
-    public HashMap<String,Integer> getReserationParPeriode() {
-        HashMap<String,Integer> datas = new HashMap<>();
+    public HashMap<String, Integer> getReserationParPeriode() {
+        HashMap<String, Integer> datas = new HashMap<>();
         try {
             PreparedStatement preparedStatement = cnx.prepareStatement("SELECT \n" +
                     "    CASE \n" +
@@ -70,8 +65,7 @@ public class StatistiquesRepository {
         return datas;
     }
 
-    public HashMap<String,Integer> getUserPlusActif()
-    {
+    public HashMap<String, Integer> getUserPlusActif() {
         HashMap<String, Integer> datas = new HashMap<>();
         try {
             PreparedStatement preparedStatement = cnx.prepareStatement("SELECT email_user, COUNT(*) AS nb_reservations\n" +
@@ -80,8 +74,7 @@ public class StatistiquesRepository {
                     "ORDER BY nb_reservations DESC\n" +
                     "LIMIT 10;\n");
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next())
-            {
+            while (resultSet.next()) {
                 datas.put(resultSet.getString("nom"), resultSet.getInt("nb_reservations"));
             }
 
@@ -89,7 +82,7 @@ public class StatistiquesRepository {
             resultSet.close();
         } catch (Exception e) {
             e.printStackTrace();
-    }
+        }
         return datas;
     }
 
@@ -102,6 +95,7 @@ public class StatistiquesRepository {
         }
         return nbVelos;
     }
+
     public int getLesUser() throws SQLException {
         int nbUser = 0;
         PreparedStatement ps = cnx.prepareStatement("SELECT COUNT(*) FROM user;");
@@ -112,14 +106,23 @@ public class StatistiquesRepository {
         return nbUser;
     }
 
-    public int getNbReservationByDay() throws SQLException {
-        int reservation = 0;
-        PreparedStatement ps = cnx.prepareStatement("SELECT ");
-        ps.executeQuery();
-        while (rs.next())
-        {
-            reservation = 0;
+    public ArrayList<Reservations> getNbResa() throws SQLException {
+        ArrayList<Reservations> tableauDate = new ArrayList<>();
+        PreparedStatement ps = cnx.prepareStatement("SELECT date_reservation, COUNT(id) AS total_reservations " +
+                "FROM reservation " +
+                "GROUP BY date_reservation " +
+                "ORDER BY date_reservation DESC;");
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            tableauDate.add(new Reservations(rs.getDate("date_reservation"), rs.getInt("total_reservations")));
         }
-        return reservation;
-    }
+
+        // Fermeture des ressources
+        rs.close();
+        ps.close();
+
+        return tableauDate;
+      }
 }

@@ -3,18 +3,33 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.demoprojetjava.Statistiques">
    <children>
-      <BarChart fx:id="graph1" layoutY="66.0" prefHeight="334.0" prefWidth="500.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </BarChart>
+      <AnchorPane fx:id="ap1" disable="true" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <TableView fx:id="tvResa" layoutX="100.0" layoutY="57.0" prefHeight="236.0" prefWidth="237.0">
+              <columns>
+                <TableColumn fx:id="tcDate" prefWidth="75.0" text="Date" />
+                <TableColumn fx:id="tcNbResa" prefWidth="160.0" text="Nombre de réservations" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ap2" disable="true" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <BarChart fx:id="graph1" layoutX="50.0" layoutY="66.0" prefHeight="334.0" prefWidth="500.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </BarChart>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

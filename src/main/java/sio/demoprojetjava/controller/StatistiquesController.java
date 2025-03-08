@@ -1,7 +1,10 @@
 package sio.demoprojetjava.controller;
 
+import sio.demoprojetjava.model.Reservations;
 import sio.demoprojetjava.services.StatistiquesServices;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StatistiquesController {
@@ -13,5 +16,14 @@ public class StatistiquesController {
 
     public HashMap<String, Integer> getNbReservations() {
        return statistiquesServices.getNbReservations();
+    }
+
+    public HashMap<String,Integer> getReserationParPeriode()
+    {
+        return statistiquesServices.getReserationParPeriode();
+    }
+
+    public ArrayList<Reservations>getNbResa() throws SQLException {
+        return statistiquesServices.getNbResa();
     }
 }
