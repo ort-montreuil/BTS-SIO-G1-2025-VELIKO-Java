@@ -13,6 +13,7 @@
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <children>
+      <Button fx:id="btnStat" mnemonicParsing="false" onMouseClicked="#btnStatCliked" prefHeight="65.0" prefWidth="227.0" text="Statistiques de l'application" />
       <Label fx:id="welcomeText" />
       <Button fx:id="btnAdmin" mnemonicParsing="false" onMouseClicked="#btnAdminCliked" prefHeight="4.0" prefWidth="231.0" text="Coté Admin" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Carte Veliko" textAlignment="CENTER" underline="true" wrappingWidth="258.43408203125">

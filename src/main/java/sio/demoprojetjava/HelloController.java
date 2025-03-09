@@ -37,6 +37,8 @@ public class HelloController implements Initializable {
     private User user;
     @FXML
     private Button btnAdmin;
+    @FXML
+    private Button btnStat;
 
 
     @FXML
@@ -151,6 +153,21 @@ public class HelloController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setTitle("Admin");
+            stage.setScene(scene);
+            stage.show();
+            ((Stage) btnAdmin.getScene().getWindow()).close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void btnStatCliked(Event event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("statistiques.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Statistiques");
             stage.setScene(scene);
             stage.show();
             ((Stage) btnAdmin.getScene().getWindow()).close();
