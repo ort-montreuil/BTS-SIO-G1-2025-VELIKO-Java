@@ -1,13 +1,39 @@
 package sio.demoprojetjava.model;
 
-public class Station  {
+public class Station {
     private double latitude;
     private double longitude;
+    private String name;
+    private int popularite;
 
-
-    public Station(double latitude, double longitude) {
+    // Constructeur principal
+    public Station(double latitude, double longitude, String name, int popularite) {
         this.latitude = latitude;
         this.longitude = longitude;
+        this.name = name;
+        this.popularite = popularite;
+    }
+
+    // Constructeur pour les stations favorites (pas besoin des coordonnées ici)
+    public Station(String name, int popularite) {
+        this.name = name;
+        this.popularite = popularite;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPopularite() {
+        return popularite;
+    }
+
+    public void setPopularite(int popularite) {
+        this.popularite = popularite;
     }
 
     public double getLatitude() {
@@ -17,17 +43,4 @@ public class Station  {
     public double getLongitude() {
         return longitude;
     }
-
-//    public static List<Station> getStations() throws SQLException {
-//        List<Station> stations = new ArrayList<>();
-//        Connection cnx = DataSourceProvider.getCnx();
-//        Statement stmt = cnx.createStatement();
-//        ResultSet rs = stmt.executeQuery("SELECT lat, lon FROM station");
-//        while (rs.next()) {
-//            double latitude = rs.getDouble("lat");
-//            double longitude = rs.getDouble("lon");
-//            stations.add(new Station(latitude, longitude));
-//        }
-//        return stations;
-//    }
 }

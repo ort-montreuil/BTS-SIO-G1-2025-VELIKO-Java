@@ -1,6 +1,8 @@
 package sio.demoprojetjava.controller;
 
 import sio.demoprojetjava.model.Reservations;
+import sio.demoprojetjava.model.Station;
+import sio.demoprojetjava.repositories.StatistiquesRepository;
 import sio.demoprojetjava.services.StatistiquesServices;
 
 import java.sql.SQLException;
@@ -27,6 +29,7 @@ public class StatistiquesController {
         return statistiquesServices.getNbResa();
     }
 
+
     public int getLesStations() {
         return statistiquesServices.getLesStations();
     }
@@ -38,4 +41,36 @@ public class StatistiquesController {
     public HashMap<String, Integer> getUserPlusActif() {
         return statistiquesServices.getUserPlusActif();
     }
+
+
+    public HashMap<String, Integer> getTop10UsersReservations() {
+        return statistiquesServices.getTop10UsersReservations();
+    }
+
+    public HashMap<String, Integer> getTop10StationsCapacite() {
+        return statistiquesServices.getTop10StationsCapacite();
+    }
+
+    public HashMap<String, Integer> getAgesUser() throws SQLException {
+        return statistiquesServices.getAgesUser();
+    }
+
+
+
+
+
+
+
+    public HashMap<String, Integer> getTypeVeloByReservation() {
+        try {
+            StatistiquesRepository statistiquesService = new StatistiquesRepository();
+            return statistiquesService.getTypeVeloByReservation(); // Appel au service
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+    }
+
+
+
 }

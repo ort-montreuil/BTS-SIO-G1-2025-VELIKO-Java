@@ -2,12 +2,8 @@ package sio.demoprojetjava;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.chart.*;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import sio.demoprojetjava.controller.StatistiquesController;
@@ -44,6 +40,30 @@ public class Statistiques implements Initializable {
     private BarChart graph3;
     @javafx.fxml.FXML
     private AnchorPane ap3;
+    @javafx.fxml.FXML
+    private AnchorPane ap4;
+    @javafx.fxml.FXML
+    private AnchorPane ap5;
+    @javafx.fxml.FXML
+    private BarChart graph5;
+    @javafx.fxml.FXML
+    private BarChart graph4;
+    @javafx.fxml.FXML
+    private PieChart graph6;
+    @javafx.fxml.FXML
+    private AnchorPane ap6;
+    @javafx.fxml.FXML
+    private AnchorPane ap7;
+    @javafx.fxml.FXML
+    private TableColumn tcNom;
+    @javafx.fxml.FXML
+    private TableColumn tcPopularite;
+    @javafx.fxml.FXML
+    private AnchorPane ap8;
+    @javafx.fxml.FXML
+    private TableView tvFavoris;
+    @javafx.fxml.FXML
+    private PieChart graph8;
 
 
     @Override
@@ -69,9 +89,7 @@ public class Statistiques implements Initializable {
         graph1.getData().add(series);
 
 
-
-
-        // Population graph2
+        // Population tab
         tcDate.setCellValueFactory(new PropertyValueFactory<>("date_resa"));
         tcNbResa.setCellValueFactory(new PropertyValueFactory<>("nbResa"));
         try {
@@ -84,8 +102,8 @@ public class Statistiques implements Initializable {
         txtNbStation.setText(String.valueOf(statistiquesController.getLesStations()));
         txtNbUser.setText(String.valueOf(statistiquesController.getLesUser()));
 
-        //graph3
 
+        //graph3
         HashMap<String, Integer> data3 = statistiquesController.getUserPlusActif();
 
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
@@ -98,5 +116,108 @@ public class Statistiques implements Initializable {
         graph3.getData().clear();
         graph3.getData().add(series3);
 
+
+
+
+        //graph4
+        // Top 10 Utilisateurs avec le plus de réservations
+        XYChart.Series<String, Number> series4 = new XYChart.Series<>();
+        series4.setName("Top 10 Utilisateurs");
+
+        // Récupérer les données des top 10 utilisateurs
+        HashMap<String, Integer> topUsers = statistiquesController.getTop10UsersReservations();
+        for (Map.Entry<String, Integer> entry : topUsers.entrySet()) {
+            series4.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
+
+        // Ajouter la série au graph4
+        graph4.getData().clear();
+        graph4.getData().add(series4);
+
+
+    //graph5
+        // graph5, Top 10 Stations avec le plus de capacité
+        XYChart.Series<String, Number> series5 = new XYChart.Series<>();
+        series5.setName("Top 10 Stations avec le plus de capacité");
+
+        // Récupérer les données des stations avec leur capacité
+        HashMap<String, Integer> topStations = statistiquesController.getTop10StationsCapacite();
+        if (topStations.isEmpty()) {
+            System.out.println("Aucune donnée pour les stations !");
+        } else {
+            for (Map.Entry<String, Integer> entry : topStations.entrySet()) {
+                XYChart.Data<String, Number> dataPoint = new XYChart.Data<>(entry.getKey(), entry.getValue());
+                series5.getData().add(dataPoint);
+
+
+                Tooltip tooltip = new Tooltip("Station: " + entry.getKey() + "\nCapacité: " + entry.getValue());
+                Tooltip.install(dataPoint.getNode(), tooltip);
+            }
+
+
+            graph5.lookup(".chart-legend").setStyle("-fx-font-size: 10px;");
+            graph5.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 10px;");
+            graph5.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 10px;");
+
+
+        }
+
+        // Ajouter la série au graphique graph5
+        graph5.getData().clear();
+        graph5.getData().add(series5);
+
+
+
+
+        //graph6
+        HashMap<String, Integer> dataAge = null; // Récupère les données de répartition d'âge
+        try {
+            dataAge = statistiquesController.getAgesUser();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        graph6.getData().clear();
+
+        // Ajouts les données au PieChart
+        for (Map.Entry<String, Integer> entry : dataAge.entrySet()) {
+            graph6.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
+        }
+
+
+        //graph7
+
+
+
+
+
+
+        //graph 8
+
+        //Type de velo reservé
+        HashMap<String, Integer> typeVeloData;
+        typeVeloData = statistiquesController.getTypeVeloByReservation(); // Appel à la méthode du contrôleur
+
+        // Ajouts les données au PieChart
+        for (Map.Entry<String, Integer> entry : typeVeloData.entrySet()) {
+            // Renommer la variable 'data' pour éviter les conflits
+            PieChart.Data pieChartData = new PieChart.Data(entry.getKey(), entry.getValue());
+            graph8.getData().add(pieChartData);
+
+            // Ajouts un Tooltip pour chaque segment du graphique
+            Tooltip t = new Tooltip(entry.getKey() + " : " + entry.getValue() + " réservations");
+            t.setStyle("-fx-font-weight: bold");
+            Tooltip.install(pieChartData.getNode(), t);
+        }
+
+
+
+
     }
 }
+
+
+
+
+
