@@ -222,6 +222,22 @@ public class Statistiques implements Initializable {
         //graph7
 
 
+        // Récupérer les données de la base de données via ta méthode existante
+        HashMap<String, Integer> data7 = statistiquesController.getArrondissements();
+
+        // Créer une série pour le PieChart
+        for (Map.Entry<String, Integer> entry : data7.entrySet()) {
+            // Renommer la variable 'data' pour éviter les conflits
+            PieChart.Data pieChartData = new PieChart.Data(entry.getKey(), entry.getValue());
+            graph7.getData().add(pieChartData);
+
+            // Ajouts un Tooltip pour chaque segment du graphique
+            Tooltip t = new Tooltip(entry.getKey() + " : " + entry.getValue() + " utilisateurs");
+            t.setStyle("-fx-font-weight: bold");
+            Tooltip.install(pieChartData.getNode(), t);
+        }
+
+
 
 
 
