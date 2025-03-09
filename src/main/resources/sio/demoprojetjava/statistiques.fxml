@@ -4,6 +4,7 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -14,7 +15,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.demoprojetjava.Statistiques">
    <children>
-      <AnchorPane fx:id="ap1" disable="true" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;" visible="false">
+      <AnchorPane fx:id="ap1" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;">
          <children>
             <TableView fx:id="tvResa" layoutX="139.0" layoutY="110.0" prefHeight="155.0" prefWidth="301.0" style="-fx-background-color: black;">
               <columns>
@@ -31,9 +32,10 @@
                   <Font size="20.0" />
                </font>
             </Text>
+            <Button fx:id="btnPage1Retour" mnemonicParsing="false" onAction="#btnRetourCliked" prefHeight="34.0" prefWidth="70.0" text="Retour" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ap2" prefHeight="408.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;" visible="false">
+      <AnchorPane fx:id="ap2" prefHeight="408.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;">
          <children>
             <Text layoutX="63.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservations par Stations" textAlignment="CENTER" underline="true" wrappingWidth="462.43408203125">
                <font>
@@ -48,9 +50,10 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
+            <Button fx:id="btnPage2Retour" mnemonicParsing="false" onAction="#btnRetourCliked" text="Retour" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ap3" prefHeight="408.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;" visible="false">
+      <AnchorPane fx:id="ap3" prefHeight="408.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;">
          <children>
             <Text layoutX="47.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Utilisateurs les plus actifs" textAlignment="CENTER" underline="true" wrappingWidth="462.43408203125">
                <font>
@@ -65,9 +68,10 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
+            <Button fx:id="btnPage3Retour" mnemonicParsing="false" onAction="#btnRetourCliked" text="Retour" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ap4" layoutY="-3.0" prefHeight="424.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;" visible="false">
+      <AnchorPane fx:id="ap4" layoutY="-3.0" prefHeight="424.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;">
          <children>
             <Text layoutX="70.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 10 des Utilisateurs avec le plus de Reservations" textAlignment="CENTER" underline="true" wrappingWidth="462.43408203125">
                <font>
@@ -82,9 +86,10 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
+            <Button fx:id="btnPage4Retour" mnemonicParsing="false" onAction="#btnRetourCliked" text="Retour" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ap5" prefHeight="430.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;" visible="false">
+      <AnchorPane fx:id="ap5" prefHeight="430.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;">
          <children>
             <Text layoutX="69.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 10 des Stations avec le plus de capacité" textAlignment="CENTER" underline="true" wrappingWidth="462.43408203125">
                <font>
@@ -99,9 +104,10 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
+            <Button fx:id="btnPage5Retour" mnemonicParsing="false" onAction="#btnRetourCliked" text="Retour" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ap6" prefHeight="421.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;" visible="false">
+      <AnchorPane fx:id="ap6" prefHeight="421.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;">
          <children>
             <Text layoutX="47.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ages des Utilisateurs" textAlignment="CENTER" underline="true" wrappingWidth="505.43408203125">
                <font>
@@ -109,6 +115,7 @@
                </font>
             </Text>
             <PieChart fx:id="graph6" layoutX="113.0" layoutY="84.0" prefHeight="287.0" prefWidth="375.0" />
+            <Button fx:id="btnPage6Retour" mnemonicParsing="false" onAction="#btnRetourCliked" text="Retour" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ap7" layoutX="-4.0" prefHeight="430.0" prefWidth="604.0" style="-fx-background-color: #4CAF50;">
@@ -119,9 +126,10 @@
                </font>
             </Text>
             <PieChart fx:id="graph7" layoutX="65.0" layoutY="87.0" prefHeight="314.0" prefWidth="475.0" />
+            <Button fx:id="btnPage7Retour" mnemonicParsing="false" onAction="#btnRetourCliked" text="Retour" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ap8" prefHeight="430.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;" visible="false">
+      <AnchorPane fx:id="ap8" prefHeight="430.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;">
          <children>
             <PieChart fx:id="graph8" layoutX="89.0" layoutY="102.0" prefHeight="278.0" prefWidth="423.0" />
             <Text layoutX="40.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Types de velo Resérvés" textAlignment="CENTER" underline="true" wrappingWidth="505.43408203125">
@@ -129,7 +137,19 @@
                   <Font size="20.0" />
                </font>
             </Text>
+            <Button fx:id="btnPage8Retour" mnemonicParsing="false" onAction="#btnRetourCliked" text="Retour" />
          </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ap0" prefHeight="430.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+             <Button fx:id="btnPage1" layoutX="46.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 1" />
+             <Button fx:id="btnPage2" layoutX="175.0" layoutY="53.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 2" />
+             <Button fx:id="btnPage3" layoutX="274.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 3" />
+             <Button fx:id="btnPage4" layoutX="392.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 4" />
+             <Button fx:id="btnPage7" layoutX="264.0" layoutY="223.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 7" />
+             <Button fx:id="btnPage6" layoutX="106.0" layoutY="280.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 6" />
+             <Button fx:id="btnPage8" layoutX="348.0" layoutY="255.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 8" />
+             <Button fx:id="btnPage5" layoutX="227.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 5" />         </children>
       </AnchorPane>
    </children>
 </AnchorPane>

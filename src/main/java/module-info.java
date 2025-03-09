@@ -5,6 +5,7 @@ module sio.demoprojetjava {
     requires java.sql;
     requires com.google.gson;
     requires spring.security.crypto;
+    requires java.desktop;
     opens sio.demoprojetjava to javafx.fxml;
     exports sio.demoprojetjava;
     exports sio.demoprojetjava.tools;

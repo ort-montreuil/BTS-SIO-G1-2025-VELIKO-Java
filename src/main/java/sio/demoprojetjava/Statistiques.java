@@ -10,6 +10,7 @@ import sio.demoprojetjava.controller.StatistiquesController;
 import sio.demoprojetjava.tools.DataSourceProvider;
 
 import javax.sql.DataSource;
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -55,21 +56,53 @@ public class Statistiques implements Initializable {
     @javafx.fxml.FXML
     private AnchorPane ap7;
     @javafx.fxml.FXML
-    private TableColumn tcNom;
-    @javafx.fxml.FXML
-    private TableColumn tcPopularite;
-    @javafx.fxml.FXML
     private AnchorPane ap8;
     @javafx.fxml.FXML
-    private TableView tvFavoris;
-    @javafx.fxml.FXML
     private PieChart graph8;
+    @javafx.fxml.FXML
+    private Button btnPage1;
+    @javafx.fxml.FXML
+    private Button btnPage2;
+    @javafx.fxml.FXML
+    private Button btnPage3;
+    @javafx.fxml.FXML
+    private Button btnPage4;
+    @javafx.fxml.FXML
+    private Button btnPage5;
+    @javafx.fxml.FXML
+    private Button btnPage6;
+    @javafx.fxml.FXML
+    private Button btnPage7;
+    @javafx.fxml.FXML
+    private Button btnPage8;
+    @javafx.fxml.FXML
+    private PieChart graph7;
+    @javafx.fxml.FXML
+    private AnchorPane ap0;
+    @javafx.fxml.FXML
+    private Button btnPage1Retour;
+    @javafx.fxml.FXML
+    private Button btnPage2Retour;
+    @javafx.fxml.FXML
+    private Button btnPage7Retour;
+    @javafx.fxml.FXML
+    private Button btnPage4Retour;
+    @javafx.fxml.FXML
+    private Button btnPage5Retour;
+    @javafx.fxml.FXML
+    private Button btnPage3Retour;
+    @javafx.fxml.FXML
+    private Button btnPage8Retour;
+    @javafx.fxml.FXML
+    private Button btnPage6Retour;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dataSourceProvider = new DataSourceProvider();
         statistiquesController = new StatistiquesController();
+        ap0.toFront();
+
 
 
         // Récupérer les données de la base de données via ta méthode existante
@@ -213,6 +246,69 @@ public class Statistiques implements Initializable {
 
 
 
+
+    }
+
+
+
+
+    @javafx.fxml.FXML
+    public void btnClicked(javafx.event.ActionEvent actionEvent) {
+
+        if(actionEvent.getSource() == btnPage1){
+            ap1.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage2){
+            ap2.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage3){
+            ap3.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage4){
+            ap4.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage5){
+            ap5.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage6){
+            ap6.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage7){
+            ap7.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage8){
+            ap8.toFront();
+        }
+    }
+
+
+
+    @javafx.fxml.FXML
+    public void btnRetourCliked(javafx.event.ActionEvent actionEvent) {
+        if(actionEvent.getSource() == btnPage1Retour){
+            ap0.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage2Retour){
+            ap0.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage3Retour){
+            ap0.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage4Retour){
+            ap0.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage5Retour){
+            ap0.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage6Retour){
+            ap0.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage7Retour){
+            ap0.toFront();
+        }
+        else if(actionEvent.getSource() == btnPage8Retour){
+            ap0.toFront();
+        }
 
     }
 }
