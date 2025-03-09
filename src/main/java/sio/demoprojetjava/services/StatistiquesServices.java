@@ -58,5 +58,10 @@ public class StatistiquesServices {
     public HashMap<String, Integer> getTypeVeloByReservation() throws SQLException {
         return statistiquesRepository.getTypeVeloByReservation();
 
-}
+    }
+
+    public HashMap<String, Integer> getArrondissements() {
+        return statistiquesRepository.getArrondissements();
+    }
+
 }

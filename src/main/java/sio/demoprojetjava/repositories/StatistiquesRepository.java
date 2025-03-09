@@ -57,8 +57,6 @@ public class StatistiquesRepository {
     }
 
 
-
-
     // nb stations
     public int getLesStations() {
         int nbStations = 0;
@@ -107,44 +105,66 @@ public class StatistiquesRepository {
     }
 
 
-
-
-
-
-
-
-//top 10 des users avec le plus de reservations
+    //top 10 des users avec le plus de reservations
     public HashMap<String, Integer> getTop10UsersReservations() {
         HashMap<String, Integer> topUsers = new HashMap<>();
         try (PreparedStatement preparedStatement = cnx.prepareStatement(
                 """
-                SELECT user.email, COUNT(reservation.id) AS nb_reservations
-                FROM reservation
-                JOIN user ON reservation.id_user = user.id
-                GROUP BY user.email
-                ORDER BY nb_reservations DESC
-                LIMIT 10
-                """);
+                                SELECT user.email, COUNT(reservation.id) AS nb_reservations
+                                                FROM reservation
+                                                JOIN user ON reservation.id_user = user.id
+                                                GROUP BY user.email
+                                                ORDER BY nb_reservations DESC
+                                                LIMIT 10
+                                                
+                        """);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 topUsers.put(resultSet.getString("email"), resultSet.getInt("nb_reservations"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(
+            );
         }
 
-        return topUsers;
+        return
+
+
+                topUsers;
+        }
+
+
+
+
+
+    //arrondissemtns
+
+    public HashMap<String, Integer> getArrondissements() {
+        HashMap<String, Integer> datas = new HashMap<>();
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(
+                "SELECT CASE " +
+                        "WHEN LEFT(user.code_postale, 2) = '75' THEN 'Paris' " +
+                        "WHEN LEFT(user.code_postale, 2) = '93' THEN 'Seine-Saint-Denis (93)' " +
+                        "WHEN LEFT(user.code_postale, 2) = '94' THEN 'Val-de-Marne (94)' " +
+                        "WHEN LEFT(user.code_postale, 2) = '92' THEN 'Hauts-de-Seine (92)' " +
+                        "WHEN LEFT(user.code_postale, 2) = '91' THEN 'Essonne (91)' " +
+                        "WHEN LEFT(user.code_postale, 2) = '95' THEN 'Val-d''Oise (95)' " +
+                        "ELSE 'Autres' END AS arrondissement, " +
+                        "COUNT(*) AS nb_users " +
+                        "FROM user " +
+                        "GROUP BY arrondissement")) {
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    datas.put(resultSet.getString("arrondissement"), resultSet.getInt("nb_users"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datas;
     }
-
-
-
-
-    //arrondissemtns des users
-
-
-
-
 
 
 

@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -140,16 +141,48 @@
             <Button fx:id="btnPage8Retour" mnemonicParsing="false" onAction="#btnRetourCliked" text="Retour" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ap0" prefHeight="430.0" prefWidth="600.0" style="-fx-background-color: white;">
+      <AnchorPane fx:id="ap0" prefHeight="430.0" prefWidth="600.0" style="-fx-background-color: #4CAF50;">
          <children>
-             <Button fx:id="btnPage1" layoutX="46.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 1" />
-             <Button fx:id="btnPage2" layoutX="175.0" layoutY="53.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 2" />
-             <Button fx:id="btnPage3" layoutX="274.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 3" />
-             <Button fx:id="btnPage4" layoutX="392.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 4" />
-             <Button fx:id="btnPage7" layoutX="264.0" layoutY="223.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 7" />
-             <Button fx:id="btnPage6" layoutX="106.0" layoutY="280.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 6" />
-             <Button fx:id="btnPage8" layoutX="348.0" layoutY="255.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 8" />
-             <Button fx:id="btnPage5" layoutX="227.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnClicked" text="Page 5" />         </children>
+            <VBox layoutX="14.0" layoutY="140.0" prefHeight="176.0" prefWidth="337.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Graphiques" underline="true" wrappingWidth="336.43408203125">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                   <Button fx:id="btnPage1" mnemonicParsing="false" onAction="#btnClicked" text="Statistiques Globaux" />
+                   <Button fx:id="btnPage6" mnemonicParsing="false" onAction="#btnClicked" text="Statistiques des Ages des Utilisateurs" />
+                   <Button fx:id="btnPage3" mnemonicParsing="false" onAction="#btnClicked" text="Statistiques des Utilisateurs les plus actifs" />
+                   <Button fx:id="btnPage2" mnemonicParsing="false" onAction="#btnClicked" text="Statistiques des Reservations par Stations" />
+                   <Button fx:id="btnPage7" mnemonicParsing="false" onAction="#btnClicked" text="Statistiques des Utilisateurs et de leurs lieux de residences " />
+               </children>
+            </VBox>
+            <VBox layoutX="14.0" layoutY="316.0" prefHeight="34.0" prefWidth="180.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Autres" underline="true" wrappingWidth="153.43408203125">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                   <Button fx:id="btnPage8" mnemonicParsing="false" onAction="#btnClicked" prefHeight="26.0" prefWidth="156.0" text="Types de Vélos Reservés " />
+               </children>
+            </VBox>
+            <VBox layoutX="348.0" layoutY="140.0" prefHeight="57.0" prefWidth="345.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Top 10" underline="true" wrappingWidth="184.43408203125">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                   <Button fx:id="btnPage5" mnemonicParsing="false" onAction="#btnClicked" text="Top 10 des Stations ayant le plus de capacités " />
+                   <Button fx:id="btnPage4" mnemonicParsing="false" onAction="#btnClicked" text="Top 10 des Utilisateurs ayant le plus de Reservation" />
+               </children>
+            </VBox>         </children>
       </AnchorPane>
+      <Text layoutX="50.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Differents Statistiques" textAlignment="CENTER" underline="true" wrappingWidth="505.43408203125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

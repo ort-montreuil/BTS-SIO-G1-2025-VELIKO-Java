@@ -71,6 +71,10 @@ public class StatistiquesController {
         }
     }
 
+    public HashMap<String, Integer> getArrondissements() {
+        return statistiquesServices.getArrondissements();
+    }
+
 
 
 }
