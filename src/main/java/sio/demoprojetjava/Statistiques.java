@@ -7,6 +7,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import sio.demoprojetjava.controller.StatistiquesController;
@@ -35,6 +36,14 @@ public class Statistiques implements Initializable {
     private AnchorPane ap2;
     @javafx.fxml.FXML
     private AnchorPane ap1;
+    @javafx.fxml.FXML
+    private TextField txtNbUser;
+    @javafx.fxml.FXML
+    private TextField txtNbStation;
+    @javafx.fxml.FXML
+    private BarChart graph3;
+    @javafx.fxml.FXML
+    private AnchorPane ap3;
 
 
     @Override
@@ -70,6 +79,24 @@ public class Statistiques implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        // txtNbUser et txtNbStation
+        txtNbStation.setText(String.valueOf(statistiquesController.getLesStations()));
+        txtNbUser.setText(String.valueOf(statistiquesController.getLesUser()));
+
+        //graph3
+
+        HashMap<String, Integer> data3 = statistiquesController.getUserPlusActif();
+
+        XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+        series3.setName("Utilisateurs les plus actifs");
+
+        for (Map.Entry<String, Integer> entry : data3.entrySet()) {
+            series3.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
+
+        graph3.getData().clear();
+        graph3.getData().add(series3);
 
     }
 }

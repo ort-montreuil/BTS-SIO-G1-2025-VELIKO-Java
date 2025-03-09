@@ -26,4 +26,16 @@ public class StatistiquesController {
     public ArrayList<Reservations>getNbResa() throws SQLException {
         return statistiquesServices.getNbResa();
     }
+
+    public int getLesStations() {
+        return statistiquesServices.getLesStations();
+    }
+
+    public int getLesUser() {
+        return statistiquesServices.getLesUser();
+    }
+
+    public HashMap<String, Integer> getUserPlusActif() {
+        return statistiquesServices.getUserPlusActif();
+    }
 }

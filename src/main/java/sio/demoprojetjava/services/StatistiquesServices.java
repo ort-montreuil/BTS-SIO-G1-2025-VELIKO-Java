@@ -25,4 +25,16 @@ public class StatistiquesServices {
     public ArrayList<Reservations> getNbResa() throws SQLException {
         return statistiquesRepository.getNbResa();
     }
+
+    public int getLesStations() {
+        return statistiquesRepository.getLesStations();
+    }
+
+    public int getLesUser() {
+        return statistiquesRepository.getLesUser();
+    }
+
+    public HashMap<String, Integer> getUserPlusActif() {
+        return statistiquesRepository.getUserPlusActif();
+    }
 }

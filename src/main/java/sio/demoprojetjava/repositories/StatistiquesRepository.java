@@ -89,7 +89,7 @@ public class StatistiquesRepository {
         try (PreparedStatement preparedStatement = cnx.prepareStatement(
                 "SELECT reservation.id, user.email, reservation.date_reservation, reservation.type_velo, " +
                         "reservation.station_id_depart, reservation.station_id_arrivee " +
-                        "FROM reservation JOIN user ON reservation.id_user = user.id");
+                        "FROM reservation JOIN user ON reservation.id_user = user.id limit 5");
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
