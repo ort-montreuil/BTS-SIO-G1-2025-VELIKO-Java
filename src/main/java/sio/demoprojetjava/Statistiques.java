@@ -43,8 +43,6 @@ public class Statistiques implements Initializable {
         statistiquesController = new StatistiquesController();
 
 
-
-
         // Récupérer les données de la base de données via ta méthode existante
         HashMap<String, Integer> data = statistiquesController.getNbReservations();
 
@@ -62,7 +60,9 @@ public class Statistiques implements Initializable {
         graph1.getData().add(series);
 
 
-        // Populate graph2
+
+
+        // Population graph2
         tcDate.setCellValueFactory(new PropertyValueFactory<>("date_resa"));
         tcNbResa.setCellValueFactory(new PropertyValueFactory<>("nbResa"));
         try {
@@ -70,5 +70,6 @@ public class Statistiques implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

@@ -18,9 +18,9 @@ public class StatistiquesServices {
         return statistiquesRepository.getNbReservations();
     }
 
-    public HashMap<String, Integer> getReserationParPeriode() {
-        return statistiquesRepository.getReserationParPeriode();
-    }
+ // public HashMap<String, Integer> getReserationParPeriode() {
+ //       return statistiquesRepository.getReserationParPeriode();
+ // }
 
     public ArrayList<Reservations> getNbResa() throws SQLException {
         return statistiquesRepository.getNbResa();

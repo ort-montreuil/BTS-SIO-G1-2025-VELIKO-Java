@@ -18,10 +18,10 @@ public class StatistiquesController {
        return statistiquesServices.getNbReservations();
     }
 
-    public HashMap<String,Integer> getReserationParPeriode()
-    {
-        return statistiquesServices.getReserationParPeriode();
-    }
+//    public HashMap<String,Integer> getReserationParPeriode()
+// {
+    // return statistiquesServices.getReserationParPeriode();
+ //}
 
     public ArrayList<Reservations>getNbResa() throws SQLException {
         return statistiquesServices.getNbResa();

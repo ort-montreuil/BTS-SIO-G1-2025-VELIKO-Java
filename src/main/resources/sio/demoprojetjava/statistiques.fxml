@@ -11,10 +11,10 @@
    <children>
       <AnchorPane fx:id="ap1" disable="true" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
          <children>
-            <TableView fx:id="tvResa" layoutX="100.0" layoutY="57.0" prefHeight="236.0" prefWidth="237.0">
+            <TableView fx:id="tvResa" layoutX="140.0" layoutY="52.0" prefHeight="334.0" prefWidth="270.0" style="-fx-background-color: black;">
               <columns>
-                <TableColumn fx:id="tcDate" prefWidth="75.0" text="Date" />
-                <TableColumn fx:id="tcNbResa" prefWidth="160.0" text="Nombre de réservations" />
+                <TableColumn fx:id="tcDate" prefWidth="133.0" text="Date" />
+                <TableColumn fx:id="tcNbResa" prefWidth="136.0" text="Nombre de réservations" />
               </columns>
             </TableView>
          </children>

@@ -27,8 +27,8 @@ import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
 
-    private final String apiUrl = "http://localhost"; // Replace with the correct URL
-    private final int apiPort = 9042; // Ensure the port matches your API
+    private final String apiUrl = "http://localhost";
+    private final int apiPort = 9042;
     @FXML
     private Pane mapContainer;
     @FXML
@@ -41,30 +41,29 @@ public class HelloController implements Initializable {
 
     @FXML
     public void onShowMapClick() {
-        // Optional: Add behavior for a button click to reload the map
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Create a WebView instance
+
         connexionController = new ConnexionController();
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
 
-        // Load the HTML file
         String htmlPath = Objects.requireNonNull(getClass().getResource("/sio/demoprojetjava/carte.html")).toExternalForm(); // Ensure this file exists in 'resources'
         webEngine.load(htmlPath);
-        // Clear the container and add the WebView
+
         mapContainer.getChildren().clear();
         mapContainer.getChildren().add(webView);
         webView.prefWidthProperty().bind(mapContainer.widthProperty());
         webView.prefHeightProperty().bind(mapContainer.heightProperty());
 
-        // Bind the size of the WebView to the map container
+
         webView.prefWidthProperty().bind(mapContainer.widthProperty());
         webView.prefHeightProperty().bind(mapContainer.heightProperty());
 
-        // Fetch data and process stations
+
         List<JsonObject> stations = fetchStationData();
         System.out.println("Fetched Stations: " + stations);
 

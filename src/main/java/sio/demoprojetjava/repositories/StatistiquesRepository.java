@@ -3,10 +3,7 @@ package sio.demoprojetjava.repositories;
 import sio.demoprojetjava.model.Reservations;
 import sio.demoprojetjava.tools.DataSourceProvider;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,109 +17,109 @@ public class StatistiquesRepository {
         this.cnx = DataSourceProvider.getCnx();
     }
 
+    // nb resa par station
     public HashMap<String, Integer> getNbReservations() {
         HashMap<String, Integer> datas = new HashMap<>();
-        try {
-            PreparedStatement preparedStatement = cnx.prepareStatement("SELECT s.name, COUNT(r.id) AS nb_reservations FROM station s JOIN reservation r ON s.station_id = r.station_id_depart GROUP BY s.station_id ORDER BY nb_reservations DESC LIMIT 10;");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                datas.put(resultSet.getString("name"), resultSet.getInt("nb_reservations"));
-            }
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(
+                "SELECT s.name, COUNT(r.id) AS nb_reservations FROM station s " +
+                        "JOIN reservation r ON s.station_id = r.station_id_depart " +
+                        "GROUP BY s.station_id ORDER BY nb_reservations DESC LIMIT 10")) {
 
-            preparedStatement.close();
-            resultSet.close();
-        } catch (Exception e) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    datas.put(resultSet.getString("name"), resultSet.getInt("nb_reservations"));
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return datas;
     }
 
-    public HashMap<String, Integer> getReserationParPeriode() {
-        HashMap<String, Integer> datas = new HashMap<>();
-        try {
-            PreparedStatement preparedStatement = cnx.prepareStatement("SELECT \n" +
-                    "    CASE \n" +
-                    "        WHEN HOUR(heure_debut) BETWEEN 6 AND 11 THEN 'Matin'\n" +
-                    "        WHEN HOUR(heure_debut) BETWEEN 12 AND 17 THEN 'Après-midi'\n" +
-                    "        WHEN HOUR(heure_debut) BETWEEN 18 AND 23 THEN 'Soir'\n" +
-                    "        ELSE 'Nuit'\n" +
-                    "    END AS periode,\n" +
-                    "    COUNT(*) AS nb_reservations\n" +
-                    "FROM reservation\n" +
-                    "GROUP BY periode\n" +
-                    "ORDER BY FIELD(periode, 'Matin', 'Après-midi', 'Soir', 'Nuit');\n");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                datas.put(resultSet.getString("periode"), resultSet.getInt("nb_reservations"));
+    // nb stations
+    public int getLesStations() {
+        int nbStations = 0;
+        try (PreparedStatement ps = cnx.prepareStatement("SELECT COUNT(*) FROM station");
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                nbStations = rs.getInt(1);
             }
-
-            preparedStatement.close();
-            resultSet.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return datas;
+        return nbStations;
     }
 
-    public HashMap<String, Integer> getUserPlusActif() {
-        HashMap<String, Integer> datas = new HashMap<>();
-        try {
-            PreparedStatement preparedStatement = cnx.prepareStatement("SELECT email_user, COUNT(*) AS nb_reservations\n" +
-                    "FROM reservation\n" +
-                    "GROUP BY email_user\n" +
-                    "ORDER BY nb_reservations DESC\n" +
-                    "LIMIT 10;\n");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                datas.put(resultSet.getString("nom"), resultSet.getInt("nb_reservations"));
-            }
-
-            preparedStatement.close();
-            resultSet.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return datas;
-    }
-
-    public int getLesStations() throws SQLException {
-        int nbVelos = 0;
-        PreparedStatement ps = cnx.prepareStatement("SELECT COUNT(*) FROM station;");
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            nbVelos = rs.getInt(1);
-        }
-        return nbVelos;
-    }
-
-    public int getLesUser() throws SQLException {
+    // nb user
+    public int getLesUser() {
         int nbUser = 0;
-        PreparedStatement ps = cnx.prepareStatement("SELECT COUNT(*) FROM user;");
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            nbUser = rs.getInt(1);
+        try (PreparedStatement ps = cnx.prepareStatement("SELECT COUNT(*) FROM user");
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                nbUser = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return nbUser;
     }
 
-    public ArrayList<Reservations> getNbResa() throws SQLException {
+    // date_resa par date
+    public ArrayList<Reservations> getNbResa() {
         ArrayList<Reservations> tableauDate = new ArrayList<>();
-        PreparedStatement ps = cnx.prepareStatement("SELECT date_reservation, COUNT(id) AS total_reservations " +
-                "FROM reservation " +
-                "GROUP BY date_reservation " +
-                "ORDER BY date_reservation DESC;");
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(
+                "SELECT date_reservation, COUNT(id) AS total_reservations " +
+                        "FROM reservation " +
+                        "GROUP BY date_reservation " +
+                        "ORDER BY date_reservation DESC");
+             ResultSet rs = preparedStatement.executeQuery()) {
 
-        ResultSet rs = ps.executeQuery();
-
-        while (rs.next()) {
-            tableauDate.add(new Reservations(rs.getDate("date_reservation"), rs.getInt("total_reservations")));
+            while (rs.next()) {
+                tableauDate.add(new Reservations(rs.getDate("date_reservation"), rs.getInt("total_reservations")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        // Fermeture des ressources
-        rs.close();
-        ps.close();
-
         return tableauDate;
-      }
+    }
+
+    // nb user actif
+    public HashMap<String, Integer> getUserPlusActif() {
+        HashMap<String, Integer> datas = new HashMap<>();
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(
+                "SELECT reservation.id, user.email, reservation.date_reservation, reservation.type_velo, " +
+                        "reservation.station_id_depart, reservation.station_id_arrivee " +
+                        "FROM reservation JOIN user ON reservation.id_user = user.id");
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                // Modify accordingly if you need user-specific stats
+                datas.put(resultSet.getString("email"), resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datas;
+    }
+
+    // resa pr station de depart
+    public HashMap<String, Integer> getResaParStationDepart() {
+        HashMap<String, Integer> datas = new HashMap<>();
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(
+                "SELECT station.name, COUNT(*) AS nb_reservations " +
+                        "FROM reservation " +
+                        "JOIN station ON reservation.station_id_depart = station.station_id " +
+                        "GROUP BY station.name " +
+                        "ORDER BY nb_reservations DESC");
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                datas.put(resultSet.getString("name"), resultSet.getInt("nb_reservations"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datas;
+    }
+
 }
