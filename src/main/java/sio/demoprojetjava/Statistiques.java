@@ -203,7 +203,7 @@ public class Statistiques implements Initializable {
 
 
         //graph6
-        HashMap<String, Integer> dataAge = null; // Récupère les données de répartition d'âge
+        HashMap<String, Integer> dataAge = null; // Récupère les données de répartition d'age
         try {
             dataAge = statistiquesController.getAgesUser();
         } catch (SQLException e) {

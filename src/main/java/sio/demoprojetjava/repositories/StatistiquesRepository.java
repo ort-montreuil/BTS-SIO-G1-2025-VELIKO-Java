@@ -164,7 +164,14 @@ public class StatistiquesRepository {
             e.printStackTrace();
         }
         return datas;
+
+
+
+        //user bloqué
+
     }
+
+
 
 
 
